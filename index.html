@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قريباً Comming Soon</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+    background:
+      radial-gradient(circle at 20% 15%, #1c1c40 0%, transparent 55%),
+      radial-gradient(circle at 80% 85%, #2b1a3d 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #12122b 0%, #04040c 100%);
+    background-color: #04040c;
+  }
+
+  /* ====== طبقة الأشكال المتطايرة ====== */
+  .shapes {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .shape {
+    position: absolute;
+    display: block;
+    will-change: transform;
+    animation-name: float;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate(var(--tx), var(--ty)) rotate(120deg) scale(1.15);
+    }
+    66% {
+      transform: translate(calc(var(--tx) * -1), calc(var(--ty) * 0.6)) rotate(240deg) scale(0.9);
+    }
+    100% {
+      transform: translate(0, 0) rotate(360deg) scale(1);
+    }
+  }
+
+  /* ====== المحتوى ====== */
+  .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 24px;
+    max-width: 1100px;
+    animation: fadeIn 1.6s ease both;
+  }
+
+  .content::before {
+    content: '';
+    position: absolute;
+    inset: -60% -30%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 50%, rgba(130, 90, 255, 0.28), transparent 62%);
+    filter: blur(30px);
+    animation: pulse 7s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: .65; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.12); }
+  }
+
+  /* العنوان الرئيسي */
+  .title {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.1rem, 8vw, 6rem);
+    line-height: 1.35;
+    letter-spacing: -0.5px;
+
+    background: linear-gradient(100deg,
+      #ffd86f, #fc6262, #a06bff, #4facfe, #43e97b, #ffd86f);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    filter: drop-shadow(0 0 28px rgba(160, 107, 255, .45));
+
+    animation:
+      shine 8s linear infinite,
+      rise 1.2s cubic-bezier(.2, .8, .2, 1) both;
+  }
+
+  @keyframes shine {
+    from { background-position: 0% 50%; }
+    to   { background-position: 300% 50%; }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(.88);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* الخط الفاصل */
+  .divider {
+    width: 0;
+    height: 3px;
+    margin: 1.3rem auto 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, #6ec6ff, #a06bff, #ff6b9d, transparent);
+    box-shadow: 0 0 22px rgba(150, 120, 255, .9);
+    animation: grow 1.2s cubic-bezier(.2, .8, .2, 1) .55s forwards;
+  }
+
+  @keyframes grow {
+    to { width: min(72%, 430px); }
+  }
+
+  /* الاسم */
+  .name {
+    direction: ltr;
+    margin-top: 1.3rem;
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 3.2vw, 2.3rem);
+    letter-spacing: .16em;
+    color: #eaf2ff;
+    text-shadow:
+      0 0 18px rgba(120, 180, 255, .75),
+      0 0 45px rgba(120, 180, 255, .35);
+    animation: rise 1.2s cubic-bezier(.2, .8, .2, 1) .35s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* احترام إعداد تقليل الحركة */
+  @media (prefers-reduced-motion: reduce) {
+    .shape, .title, .name, .divider, .content::before {
+      animation: none !important;
+    }
+    .divider { width: min(72%, 430px); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- الأشكال المتطايرة تُنشأ تلقائياً بالجافاسكربت -->
+  <div class="shapes" id="shapes"></div>
+
+  <div class="content">
+    <h1 class="title">قريباً Comming Soon</h1>
+    <div class="divider"></div>
+    <p class="name">Trust Center</p>
+  </div>
+
+<script>
+  (function () {
+    const container = document.getElementById('shapes');
+
+    const colors = [
+      '#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1',
+      '#a55eea', '#ff9ff3', '#54a0ff', '#ffb142'
+    ];
+
+    const COUNT = 24;
+
+    for (let i = 0; i < COUNT; i++) {
+      const s = document.createElement('span');
+      s.className = 'shape';
+
+      const size = Math.random() * 120 + 30;   // من 30 إلى 150 بكسل
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const duration = Math.random() * 16 + 12; // 12 - 28 ثانية
+
+      s.style.width  = size + 'px';
+      s.style.height = size + 'px';
+      s.style.left   = (Math.random() * 100) + '%';
+      s.style.top    = (Math.random() * 100) + '%';
+      s.style.background = color;
+      s.style.opacity = (Math.random() * 0.22 + 0.12).toFixed(2);
+      s.style.filter = 'blur(' + (Math.random() * 8 + 2).toFixed(1) + 'px)';
+
+      // شكل عشوائي: دائرة / blob / مربع ناعم
+      const r = Math.random();
+      if (r < 0.5) {
+        s.style.borderRadius = '50%';
+      } else if (r < 0.78) {
+        s.style.borderRadius = '30% 70% 70% 30% / 30% 30% 70% 70%';
+      } else {
+        s.style.borderRadius = '22%';
+      }
+
+      // مسافة الحركة لكل شكل
+      s.style.setProperty('--tx', (Math.random() * 220 - 110).toFixed(0) + 'px');
+      s.style.setProperty('--ty', (Math.random() * 220 - 110).toFixed(0) + 'px');
+
+      s.style.animationDuration = duration + 's';
+      s.style.animationDelay = (-Math.random() * duration).toFixed(2) + 's';
+
+      container.appendChild(s);
+    }
+  })();
+</script>
+
+</body>
+</html>
